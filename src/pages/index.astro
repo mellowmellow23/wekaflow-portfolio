@@ -1,10 +1,30 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Fetch all blog posts dynamically
+const posts = await getCollection('blog');
 ---
-<html lang="en">
-  <head>
-    <title>Wekaflow Portfolio</title>
-  </head>
-  <body style="background: #020617; color: #f8fafc; font-family: sans-serif; display: grid; place-content: center; height: 100vh; margin: 0;">
-    <h1>Wekaflow Automation Engine is Live 🚀</h1>
-  </body>
-</html>
+
+<MainLayout title="Wekaflow Automation | AI Search Visibility" description="We engineer data structures for Generative AI engines.">
+  <div style="margin-bottom: 4rem;">
+    <h1 style="color: #f1f5f9; font-size: 3rem; margin-bottom: 1rem; letter-spacing: -0.05em;">Welcome to Wekaflow Automation</h1>
+    <p style="color: #94a3b8; font-size: 1.2rem; line-height: 1.6; max-width: 600px;">
+      We engineer technical data structures to ensure high-value businesses are visible, retrievable, and cited by AI engines like ChatGPT, Perplexity, and Gemini.
+    </p>
+  </div>
+
+  <h2 style="color: #34d399; font-size: 1.5rem; border-bottom: 1px solid #1e293b; padding-bottom: 0.75rem; margin-bottom: 1.5rem;">Technical Case Studies</h2>
+  
+  <div style="display: grid; gap: 1.5rem;">
+    {posts.map(post => (
+      <article style="background: #0f172a; padding: 1.5rem; border-radius: 8px; border: 1px solid #1e293b; transition: all 0.2s ease;">
+        <a href={`/blog/${post.id}`} style="text-decoration: none;">
+          <h3 style="color: #f8fafc; font-size: 1.3rem; margin-top: 0; margin-bottom: 0.5rem;">{post.data.title}</h3>
+          <p style="color: #64748b; font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;">{post.data.description}</p>
+          <span style="color: #3b82f6; font-size: 0.85rem; font-weight: bold;">Read Full Audit &rarr;</span>
+        </a>
+      </article>
+    ))}
+  </div>
+</MainLayout>
