@@ -1,0 +1,34 @@
+---
+import Schema from '../components/Schema.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate?: Date;
+}
+
+const { title, description, publishDate } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://wekaflow.vercel.app');
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Wekaflow Automation</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- AI Retrieval Engine Injections -->
+    <Schema title={title} description={description} url={canonicalURL.toString()} publishDate={publishDate} />
+  </head>
+  <body style="background: #020617; color: #f8fafc; font-family: sans-serif; padding: 2rem; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+    <nav style="display: flex; justify-between: space-between; border-bottom: 1px solid #1e293b; padding-bottom: 1rem; margin-bottom: 2rem;">
+      <a href="/" style="color: #34d399; text-decoration: none; font-weight: bold; font-size: 1.2rem;">Wekaflow Automation</a>
+    </nav>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

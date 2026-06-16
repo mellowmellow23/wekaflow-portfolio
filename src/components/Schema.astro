@@ -1,0 +1,40 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  publishDate?: Date;
+}
+
+const { title, description, url, publishDate } = Astro.props;
+
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": publishDate ? "TechArticle" : "WebPage",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": url
+  },
+  "headline": title,
+  "description": description,
+  "author": {
+    "@type": "Person",
+    "name": "Julius Maina Macharia",
+    "jobTitle": "AI Search Visibility Engineer",
+    "sameAs": [
+      "https://www.linkedin.com/in/your-profile-url" 
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Wekaflow Automation",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://wekaflow.vercel.app/assets/logo.png"
+    }
+  },
+  ...(publishDate && { "datePublished": publishDate.toISOString() })
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
